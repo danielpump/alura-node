@@ -1,7 +1,18 @@
+
+
 module.exports = function(app){	
-	app.get('/produtos', function(req,res){
-		console.log("Produtos");
-		res.render("produtos/lista")
+    app.get('/produtos',function(req,res){    	
+        var mysql = require('mysql');
+        var connection = mysql.createConnection({
+            host : 'localhost',
+            user : 'padrao',
+            password : '',
+            database : 'casadocodigo_nodejs'
+        });
+        connection.query('select * from livros',function(err,results){
+            res.render('produtos/lista',{lista:results});
+        });
+        connection.end();
 	});	
 }
 
