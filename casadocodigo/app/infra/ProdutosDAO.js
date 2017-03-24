@@ -7,8 +7,10 @@ ProdutosDAO.prototype.lista = function(callback){
 }
 
 ProdutosDAO.prototype.salva = function(produto,callback){
-	console.log(produto);
-    this._connection.query('insert into livros set ?',produto,callback);
+	
+	console.log(produto);	    	
+    var query = this._connection.query('insert into livros set ?',produto,callback);
+    console.log(query.sql);
 
 }
 
