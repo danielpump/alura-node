@@ -38,12 +38,13 @@ module.exports = function(app){
 
         var validatorTitulo = req.assert('titulo','Titulo é obrigatório');
         validatorTitulo.notEmpty();
-        var validatorPreco = req.assert('peco','Formato inválido');
+        var validatorPreco = req.assert('preco','Formato inválido');
         validatorPreco.isFloat;
 
         var erros = req.validationErrors();
 
         if(erros){
+            res.status(400);
             res.render('produtos/form',{errosValidacao:erros, produto:produto});
             return;
         }
@@ -52,7 +53,6 @@ module.exports = function(app){
         var produtosDAO = new app.infra.ProdutosDAO(connection);
         
         produtosDAO.salva(produto, function(erros,resultados){
-            console.log(erros);
             res.redirect('/produtos');
         });
         connection.end();
